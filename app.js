@@ -3,8 +3,7 @@ const bodyParser = require("body-parser");
 const request = require("request");
 const app = express();
 const https = require("https");
-// list id - 005c18994f
-//api key - 0956d4f96bb3b4b92702921084a3a9ca-us21
+require("dotenv");
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"))
 app.get("/", function(req, res){
@@ -28,10 +27,10 @@ app.post("/", function(req,res){
   };
 
   const jsonData = JSON.stringify(data);
-  const url = "https://us21.api.mailchimp.com/3.0/lists/005c18994f/";
+  const url = "https://us21.api.mailchimp.com/3.0/lists/"+process.env.LIST_ID+"/";
   const options = {
     method : "POST",
-    auth: "niyatit:0956d4f96bb3b4b92702921084a3a9ca-us21"
+    auth: "niyatit:"+process.env.API_KEY
   }
   const request = https.request(url, options, function(response){
     if(response.statusCode == 200){
