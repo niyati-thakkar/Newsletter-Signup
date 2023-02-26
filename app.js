@@ -1,9 +1,10 @@
+require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const request = require("request");
 const app = express();
 const https = require("https");
-require("dotenv");
+
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"))
 app.get("/", function(req, res){
@@ -32,6 +33,8 @@ app.post("/", function(req,res){
     method : "POST",
     auth: "niyatit:"+process.env.API_KEY
   }
+  console.log(options);
+  console.log(url);
   const request = https.request(url, options, function(response){
     if(response.statusCode == 200){
       res.sendFile(__dirname + "/success.html");
